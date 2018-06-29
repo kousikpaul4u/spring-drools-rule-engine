@@ -23,7 +23,9 @@
     "message": "Employee number should be more than equal to 10"
 }
 ```
+
 --------
+
 
 #### Deny Request: Yearly turnover should be more than $1000.00
 ```
@@ -43,7 +45,9 @@
     "message": "Yearly turnover should be more than $1000.00"
 }
 ```
+
 --------
+
 
 #### Deny Request: Year of Registration can not be future date
 ```
@@ -63,7 +67,9 @@
     "message": "Year of Registration can not be future date"
 }
 ```
+
 -------
+
 
 #### Deny Request: Category should be IT
 ```
@@ -84,6 +90,7 @@
 }
 ```
 
+--------
 
 
 #### Allow Request
