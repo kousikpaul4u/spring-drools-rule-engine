@@ -1,0 +1,58 @@
+package com.drools.springdroolsruleengine
+
+import com.drools.springdroolsruleengine.model.SaveCompanyResponse;
+import com.drools.springdroolsruleengine.model.SaveCompanyFact;
+import java.math.BigDecimal;
+import java.util.Date;
+
+
+rule "Default Company Save"
+salience 10
+dialect "mvel"
+no-loop
+
+when
+    saveCompanyResponse: SaveCompanyResponse()
+then
+    saveCompanyResponse.setAllow("UNDEFINED");
+    saveCompanyResponse.setMessage("Unmatched rules");
+end
+
+rule "DENY: Employee number should be more than equal to 10"
+salience 9
+dialect "mvel"
+no-loop
+
+when
+    saveCompanyResponse: SaveCompanyResponse()
+    saveCompanyFact: SaveCompanyFact(noOfEmployees < 10)
+then
+    saveCompanyResponse.setAllow("DENY");
+    saveCompanyResponse.setMessage("Employee number should be more than equal to 10");
+end
+
+rule "Deny: Yearly turnover should be more than $1000.00"
+salience 9
+dialect "mvel"
+no-loop
+
+when
+    saveCompanyResponse: SaveCompanyResponse()
+    saveCompanyFact: SaveCompanyFact(yearlyTurnOver.compareTo(BigDecimal.valueOf(1000.00)) < 0)
+then
+    saveCompanyResponse.setAllow("DENY");
+    saveCompanyResponse.setMessage("Yearly turnover should be more than $1000.00");
+end
+
+rule "Deny: Year of Registration can not be future date"
+salience 8
+dialect "mvel"
+no-loop
+
+when
+    saveCompanyResponse: SaveCompanyResponse()
+    saveCompanyFact: SaveCompanyFact(yearOfRegistration.compareTo(new Date()) > 0)
+then
+    saveCompanyResponse.setAllow("DENY");
+    saveCompanyResponse.setMessage("Year of Registration can not be future date");
+end
